@@ -1,0 +1,12 @@
+body {
+    background-color: bisque;
+}
+
+img {
+    height: 400px;
+    width: 400px;
+}
+
+.img2 {
+    display: none;
+}
