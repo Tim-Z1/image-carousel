@@ -1,12 +1,45 @@
 body {
-    background-color: bisque;
+    background-color: black;
+    color: rgb(235, 233, 233);
+    padding-left: 2em;
+    padding-top: 0.5em;
 }
-
+h1 {
+    margin: auto;
+    width: 350px;
+    margin-bottom: 1em;
+}
+p {
+    font-size: 20px;
+}
 img {
     height: 400px;
     width: 400px;
+    visibility: hidden;
 }
 
-.img2 {
-    display: none;
+.picture-frame {
+    border: 5px solid rgb(98, 59, 23);
+    height: 400px;
+    width: 400px;
+    margin: auto;
+    /* position: absolute; */
+}
+
+.wide-div {
+    /* border: 2px solid white; */
+    position: relative;
+    height: 400px;
+    width: 1200px;
+
+    /* display flex removes spacing/gap between images in the wide-div */
+    display: flex; 
+}
+.img1 {
+    visibility: visible;
+}
+.btn-container, .navigation-dot-container {
+    width: 80px;
+    margin: auto;
+    margin-bottom: 1em;
 }
