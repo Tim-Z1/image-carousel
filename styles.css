@@ -43,3 +43,9 @@ img {
     margin: auto;
     margin-bottom: 1em;
 }
+
+/* disables horizontal/side scrolling of the webpage */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
