@@ -4,8 +4,14 @@ const getStyleRightValue = () => wideDiv.style.right;
 
 const rightBtn = document.querySelector('.right-btn');
 const leftBtn = document.querySelector('.left-btn');
-rightBtn.addEventListener( 'click', () => moveRight() );
-leftBtn.addEventListener( 'click', () => moveLeft() );
+rightBtn.addEventListener( 'click', () => {
+    moveRight();
+    currentImgCounter++; 
+});
+leftBtn.addEventListener( 'click', () => {
+    moveLeft();
+    currentImgCounter--; 
+});
 
 const changeImage = (function() {
     const isFurthestLeftImage = () => wideDiv.style.right == '0px';
@@ -85,27 +91,52 @@ function showCurrentNavDot() {
     }
 }
 
+navdot1.addEventListener('click', () => {
+    wideDiv.style.right = '0px';
+    showCurrentImage(); 
+    showCurrentNavDot();
+    currentImgCounter = 0;
+});
+navdot2.addEventListener('click', () => {
+    wideDiv.style.right = '400px';
+    showCurrentImage(); 
+    showCurrentNavDot();
+    currentImgCounter = 1;
+});
+navdot3.addEventListener('click', () => {
+    wideDiv.style.right = '800px';
+    showCurrentImage(); 
+    showCurrentNavDot();
+    currentImgCounter = 2;
+});
 
 let countingUp;
 let countingDown;
-let counter = 0;
+let currentImgCounter = 0;
+const autoNotifyMsg = document.querySelector('.auto-notification');
 const timeoutBtn = document.querySelector('.auto-timeout-btn');
 timeoutBtn.addEventListener('click', () => {
-    countUp();
+    console.log('Activating auto-advance.');
+    autoNotifyMsg.style.visibility = 'visible';
+    rightBtn.style.visibility = 'hidden';
+    leftBtn.style.visibility = 'hidden';
+    timeoutBtn.style.visibility = 'hidden';
+    stopAutoBtn.style.visibility = 'visible';
 
+    countUp();
     function countUp() {
         clearInterval(countingDown);
         countingUp = setInterval(() => {
-            if (counter == 2) {
+            if (currentImgCounter == 2) {
                 clearInterval(countingUp);
-                counter--;
+                currentImgCounter--;
                 moveLeft();
                 countDown();
-                console.log('counting down, now at img: ' + counter);
+                console.log('counting down, now at img: ' + currentImgCounter);
             } else {
-                counter++;
+                currentImgCounter++;
                 moveRight();
-                console.log('counting up, now at img: ' + counter);
+                console.log('counting up, now at img: ' + currentImgCounter);
             }
         }, 3000);
     }
@@ -113,16 +144,16 @@ timeoutBtn.addEventListener('click', () => {
     function countDown() {
         clearInterval(countingUp);
         countingDown = setInterval(() => {
-            if (counter == 0) {
+            if (currentImgCounter == 0) {
                 clearInterval(countingDown);
-                counter++;
+                currentImgCounter++;
                 moveRight();
                 countUp();   
-                console.log('counting up, now at img: ' + counter);
+                console.log('counting up, now at img: ' + currentImgCounter);
             } else {
-                counter--;  
+                currentImgCounter--;  
                 moveLeft();
-                console.log('counting down, now at img: ' + counter);
+                console.log('counting down, now at img: ' + currentImgCounter);
             }    
         }, 3000);
     }
@@ -133,8 +164,19 @@ const stopAutoBtn = document.querySelector('.stop-auto-btn');
 stopAutoBtn.addEventListener('click', () => {
     clearInterval(countingUp);
     clearInterval(countingDown);
-    console.log('Stopping Auto-advance');
+    console.log('Stopping Auto-advance.');
+    autoNotifyMsg.style.visibility = 'hidden';
+    timeoutBtn.style.visibility = 'visible';
+    stopAutoBtn.style.visibility = 'hidden';
+    rightBtn.style.visibility = 'visible';
+    leftBtn.style.visibility = 'visible';
 });
+
+// autoNotifyMsg.style.visibility = 'visible';
+// timeoutBtn.style.visibility = 'hidden';
+// stopAutoBtn.style.visibility = 'visible';
+// rightBtn.style.visibility = 'hidden';
+// leftBtn.style.visibility = 'hidden';
 
 
 function moveRight(){
@@ -149,54 +191,9 @@ function moveLeft(){
 };
 
 
-/* -ACHIEVED-
-I want counter to start from 0 and count up to 2, like this: 0 -> 1 -> 2
-when counter reaches 2, I want the code to count down to 0, like this: 2 -> 1 -> 0
-when it reaches 0 it starts to go up to 2 again, when it reaches 2 it counts back down to 0
-I want it to keep looping indefinitely until I tell the code to stop
-*/
-
-// let counter = 0;
-// let countingUp;
-// let countingDown;
-
-// function countUp() {
-//     clearInterval(countingDown);
-//     countingUp = setInterval(() => {
-//         if (counter == 2) {
-//             console.log('now at img: ' + counter);
-//             clearInterval(countingUp);
-//             counter--;
-//             countDown();
-//         } else {
-//             console.log('counting up, now at img: ' + counter);
-//             counter++;
-//         }
-//     }, 2000);
-// }
-
-// function countDown() {
-//     clearInterval(countingUp);
-//     countingDown = setInterval(() => {
-//         if (counter == 0) {
-//             console.log('now at img: ' + counter);
-//             clearInterval(countingDown);
-//             counter++;
-//             countUp();   
-//         } else {
-//             console.log('counting down, now at img: ' + counter);
-//             counter--;  
-//         }    
-//     }, 2000);
-// }
 
 
 //-------------------------
+// to do: use CSS, probably flexbox to center the h1 header and auto-notification msg
 
-//might be good idea to: write up an explanation of how my code works, explaining all of its different parts for the sake of my future self coming back to this mini project
-
-//navigation dots TO DO TASK: Make each circle link to that particular slide, so you can click on the circle and it will jump to that slide.
-
-
-//something im probably going to have to fix up: the website is able to scroll to the right because the wide-div is wide
-//something to note: on page refresh, clicking left or right btn initially loads the next image slow
+//something to note: on page refresh, clicking left or right btn initially has a delay when loading the next image

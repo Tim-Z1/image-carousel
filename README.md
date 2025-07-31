@@ -12,7 +12,7 @@ A strip of images is created and styled using HTML/CSS with a 'picture frame' be
 The image carousel has multiple features/functionality.
 
 #### Feature 1
-Clickable buttons that move the image strip left and right.
+Clickable buttons that moves the image strip left and right.
 
 #### Feature 2
 Clickable button that automatically advances the image strip and another button to stop the auto-advance/timeout.
